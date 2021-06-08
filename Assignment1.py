@@ -5,7 +5,11 @@ def getValue(d, a):
         if type(d[x]) is dict:
             getValue(d[x], a)
         else:
-            a.append(y)
+             if type(y) is list:
+                for i in y:
+                    a.append(i)
+             else:
+                a.append(y)
     return a
 
 def getThis(d,key):
