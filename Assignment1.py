@@ -1,27 +1,34 @@
-d = {'a':'apple','b':'banana','c':{'d':'dog','e':'eggs','f':{'g':['guns','asd'], 'h':{'i':'test'}}}}
+d = {'a':['apple','apricot'],'b':'banana','c':{'d':'dog','e':'eggs','f':{'g':('guns','asd'), 'h':{'i':'test'}}}}
 
-def getValue(d, a):
-    for x, y in d.items():
+def getValue(d,a):
+    for x,y in d.items():
         if type(d[x]) is dict:
-            getValue(d[x], a)
+            getValue(d[x],a)
         else:
-             if type(y) is list:
+            if type(y) is list:
                 for i in y:
                     a.append(i)
-             else:
+            elif type(y) is tuple:
+                for i in y:
+                    a.append(i)
+            else:
                 a.append(y)
     return a
 
 def getThis(d,key):
-    a = []
-    for x, y in d.items():
+    a,b =[],[]
+    for x,y in d.items():
         if x == key:
             if type(d[x]) is dict:
-                return getValue(d[x], a)
+                return getValue(d[x],a)
+            elif type(y) is tuple:
+                for i in y:
+                    b.append(i)
+                return b
             else:
                 return y
         if type(d[x]) is dict:
-            return getThis(d[x], key)
+            return getThis(d[x],key)
 
 def get(d, key):
     temp = getThis(d, key)
@@ -30,4 +37,4 @@ def get(d, key):
     else:
         print(temp)
 
-get(d,'g')
+get(d,'f')
